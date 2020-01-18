@@ -1,10 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { indigo, pink } from '@material-ui/core/colors'
-import { BrowserRouter } from 'react-router-dom'
 import MainRouter  from './containers/MainRouter'
 
 const theme = createMuiTheme({

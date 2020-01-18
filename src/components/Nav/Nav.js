@@ -37,30 +37,45 @@ const isActive = (history, path) => {
 
 class Nav extends Component {
   render() {
-    console.log(this.props.history)
-    const { history, classes, theme } = this.props
-    let activeHistoryStyleFunc;
+    const { history, classes } = this.props
+    let activeHistoryStyleFunc
     if (history.location.pathname === '/') {
       activeHistoryStyleFunc = isActive(history, '/')
     } else {
       activeHistoryStyleFunc = isActive(history, 'auth')
     }
 
+    let routes = (
+      <>
+        <NavLink to="/">
+          <IconButton aria-label="Home" className={classes.icon}>
+            <HomeIcon style={activeHistoryStyleFunc} />
+          </IconButton>
+        </NavLink>
+        <NavLink to="/signin" activeClassName="active-nav-link">
+          <Button onClick={this.props.unAuth}>Logout</Button>
+        </NavLink>
+      </>
+    )
+
+    if (!this.props.isAuth) {
+      routes = (
+        <>
+          <NavLink to="/signup" activeClassName="active-nav-link">
+            <Button>Sign up</Button>
+          </NavLink>
+          <NavLink to="/signin" activeClassName="active-nav-link">
+            <Button>Sign in</Button>
+          </NavLink>
+        </>
+      )
+    }
+
     return (
       <AppBar position="static">
         <Toolbar type="title" color="inherit">
           <Typography>Reddit</Typography>
-          <NavLink to="/">
-            <IconButton aria-label="Home" className={classes.icon}>
-              <HomeIcon style={activeHistoryStyleFunc} />
-            </IconButton>
-          </NavLink>
-          <NavLink to="/signup" activeClassName="active-nav-link">
-            Sign up
-          </NavLink>
-          <NavLink to="/signin" activeClassName="active-nav-link">
-            Sign in
-          </NavLink>
+          {routes}
         </Toolbar>
       </AppBar>
     )
