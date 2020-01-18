@@ -12,7 +12,6 @@ import {
 import ErrorIcon from '@material-ui/icons/Error'
 import { red } from '@material-ui/core/colors'
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
-import { Link, Redirect } from 'react-router-dom'
 import { signin } from '../../../axios-helpers'
 import { saveToLocalStorage } from '../../../helperFunctions'
 
@@ -50,8 +49,7 @@ class Signin extends Component {
     username: '',
     password: '',
     open: false,
-    error: '',
-    redirectTo: null
+    error: ''
   }
 
   handleSubmit = async e => {
@@ -65,11 +63,11 @@ class Signin extends Component {
     })
 
     if (response.status === 200) {
-      console.log('68');
       saveToLocalStorage(response.data.token)
       this.props.setAuth()
     } else {
-      let message = response.error.response.data.message
+      let message = response.data.message
+      console.log(message);
       this.setState({ error: message })
     }
   }
@@ -81,7 +79,7 @@ class Signin extends Component {
   }
 
   render() {
-    const { classes,  } = this.props
+    const { classes  } = this.props
 
     let errMessage = (
       <Typography variant="body1" color="error">
@@ -90,9 +88,6 @@ class Signin extends Component {
       </Typography>
     )
 
-    
-
-    let redirectPath = this.state.redirectTo
 
     return (
       <div>

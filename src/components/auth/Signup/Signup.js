@@ -53,10 +53,10 @@ const styles = theme => ({
 
 class Signup extends Component {
   state = {
-    username: 'test',
-    password: 'test',
-    confirmPassword: 'test',
-    email: 'test@test.com',
+    username: '',
+    password: '',
+    confirmPassword: '',
+    email: '',
     open: false,
     error: ''
   }
@@ -81,7 +81,7 @@ class Signup extends Component {
       console.log('ok');
       this.setState({ open: true })
     } else {
-      let message = response.error.response.data.message
+      let message = response.data.message
       this.setState({ error: message })
     }
   }

@@ -6,6 +6,10 @@ import Home from '../components/Home/Home'
 import Signup from '../components/auth/Signup/Signup'
 import Signin from '../components/auth/Signin/Signin'
 
+import { removeToken } from '../helperFunctions'
+
+import { checkToken } from '../axios-helpers'
+
 export default class MainRouter extends Component {
   state = {
     isAuthenticated: false
@@ -17,25 +21,36 @@ export default class MainRouter extends Component {
 
   unAuthenticate = () => {
     this.setState({ isAuthenticated: false })
+    removeToken()
+  }
+
+  componentDidMount() {
+    let hasValidToken = checkToken();
+    if (hasValidToken) {
+      this.setAuthenticated()
+    }
   }
 
   render() {
-    let routes = (
-      <Switch>
-        <Route path="/signup" render={() => <Signup />} />
-        <Route
-          path="/signin"
-          render={() => (
-            <Signin
-              setAuth={this.setAuthenticated}
-              isAuth={this.state.isAuthenticated}
-            />
-          )}
-        />
-        <Redirect to="/signin" />
-      </Switch>
-    )
-    
+    let routes = null
+    if (!this.state.isAuthenticated) {
+      routes = (
+        <Switch>
+          <Route path="/signup" render={() => <Signup />} />
+          <Route
+            path="/signin"
+            render={() => (
+              <Signin
+                setAuth={this.setAuthenticated}
+                isAuth={this.state.isAuthenticated}
+              />
+            )}
+          />
+          <Redirect to="/signin" />
+        </Switch>
+      )
+    }
+
     if (this.state.isAuthenticated) {
       routes = (
         <Switch>
