@@ -30,7 +30,6 @@ export const checkToken = () => {
   }
 
   const decoded = jwt_decode(token)
-
   const currentTime = Date.now() / 1000
 
   if (decoded.exp < currentTime) {
@@ -41,9 +40,7 @@ export const checkToken = () => {
   } else {
     setAuthJWT(token)
 
-    const user = decoded
-
-    return user
+    return decoded;
   }
 }
 

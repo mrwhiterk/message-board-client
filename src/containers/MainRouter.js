@@ -25,8 +25,7 @@ export default class MainRouter extends Component {
   }
 
   componentDidMount() {
-    let hasValidToken = checkToken();
-    if (hasValidToken) {
+    if (checkToken()) {
       this.setAuthenticated()
     }
   }
@@ -49,9 +48,7 @@ export default class MainRouter extends Component {
           <Redirect to="/signin" />
         </Switch>
       )
-    }
-
-    if (this.state.isAuthenticated) {
+    } else {
       routes = (
         <Switch>
           <Route exact path="/" component={Home} />

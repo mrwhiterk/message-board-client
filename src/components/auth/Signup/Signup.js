@@ -78,7 +78,6 @@ class Signup extends Component {
     })
    
     if (response.status === 200) {
-      console.log('ok');
       this.setState({ open: true })
     } else {
       let message = response.data.message
@@ -86,9 +85,9 @@ class Signup extends Component {
     }
   }
 
-  handleChange = event => {
+  handleChange = e => {
     this.setState({
-      [event.target.name]: event.target.value
+      [e.target.name]: e.target.value
     })
   }
 
