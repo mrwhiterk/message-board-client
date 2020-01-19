@@ -48,7 +48,6 @@ export const checkToken = () => {
 }
 
 export const getSecret = async () => {
-  checkToken()
 
   try {
     let response = await axios.get('/users')

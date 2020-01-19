@@ -12,7 +12,7 @@ import {
 import ErrorIcon from '@material-ui/icons/Error'
 import { red } from '@material-ui/core/colors'
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
-import { signin } from '../../../axios-helpers'
+import { signin, checkToken } from '../../../axios-helpers'
 import { saveToLocalStorage } from '../../../helperFunctions'
 
 const styles = theme => ({
@@ -65,9 +65,10 @@ class Signin extends Component {
     if (response.status === 200) {
       saveToLocalStorage(response.data.token)
       this.props.setAuth()
+      checkToken()
     } else {
       let message = response.data.message
-      console.log(message);
+
       this.setState({ error: message })
     }
   }
