@@ -61,22 +61,30 @@ class Signup extends Component {
     error: ''
   }
 
+  componentDidMount() {
+    ValidatorForm.addValidationRule('isPasswordMatch', value => {
+      return value !== this.state.password
+    })
+  }
+
+  componentWillUnmount() {
+    ValidatorForm.removeValidationRule('isPasswordMatch')
+  }
+
   handleSubmit = async e => {
     e.preventDefault()
-
     let { username, password, email, confirmPassword } = this.state
 
     if (!passwordFieldsMatch(password, confirmPassword)) {
-      return this.setState({ error: `password confirmation incorrect`})
+      return this.setState({ error: `password confirmation incorrect` })
     }
 
     let response = await signup({
       email,
       username,
-      password,
-      confirmPassword
+      password
     })
-   
+
     if (response.status === 200) {
       this.setState({ open: true })
     } else {
@@ -147,8 +155,16 @@ class Signup extends Component {
                 name="password"
                 onChange={this.handleChange}
                 margin="normal"
-                validators={['required']}
-                errorMessages={['this field is required']}
+                validators={[
+                  'required',
+                  // 'minStringLength:12',
+                  // 'matchRegexp:(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[#$^+=!*()@%])'
+                ]}
+                errorMessages={[
+                  'this field is required',
+                  // 'min of 12',
+                  // 'must have one upper, one lower, one number, and one special character] '
+                ]}
               />
               <TextValidator
                 id="confirmPassword"

@@ -13,6 +13,8 @@ import HomeIcon from '@material-ui/icons/Home'
 import { NavLink, withRouter } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 
+import Context from '../Context/Context'
+
 const styles = theme => ({
   grow: {
     flexGrow: 1
@@ -36,6 +38,8 @@ const isActive = (history, path) => {
 }
 
 class Nav extends Component {
+  static contextType = Context;
+
   render() {
     const { history, classes } = this.props
     let activeHistoryStyleFunc
@@ -53,12 +57,12 @@ class Nav extends Component {
           </IconButton>
         </NavLink>
         <NavLink to="/signin" activeClassName="active-nav-link">
-          <Button onClick={this.props.unAuth}>Logout</Button>
+          <Button onClick={this.context.unAuthenticate}>Logout</Button>
         </NavLink>
       </>
     )
 
-    if (!this.props.isAuth) {
+    if (!this.context.isAuthenticated) {
       routes = (
         <>
           <NavLink to="/signup" activeClassName="active-nav-link">

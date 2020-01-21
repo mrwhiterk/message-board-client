@@ -1,9 +1,12 @@
-import React from 'react';
-import './App.css';
+import React from 'react'
+import './App.css'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { indigo, pink } from '@material-ui/core/colors'
-import MainRouter  from './containers/MainRouter'
+import MainRouter from './containers/MainRouter'
+
+import Context from './components/Context/Context'
+import { removeToken } from './helperFunctions'
 
 const theme = createMuiTheme({
   palette: {
@@ -25,12 +28,37 @@ const theme = createMuiTheme({
   type: 'light'
 })
 
-function App() {
-  return (
-    <MuiThemeProvider theme={theme}>
-      <MainRouter theme={theme} />
-    </MuiThemeProvider>
-  );
+class App extends React.Component {
+  state = {
+    isAuthenticated: false,
+    user: {}
+  }
+
+  setAuthenticated = () => {
+    this.setState({ isAuthenticated: true })
+  }
+
+  unAuthenticate = () => {
+    this.setState({ isAuthenticated: false })
+    removeToken()
+  }
+
+  render() {
+    return (
+      <Context.Provider
+        value={{
+          isAuthenticated: this.state.isAuthenticated,
+          user: this.state.user,
+          setAuthenticated: this.setAuthenticated,
+          unAuthenticate: this.unAuthenticate
+        }}
+      >
+        <MuiThemeProvider theme={theme}>
+          <MainRouter theme={theme} />
+        </MuiThemeProvider>
+      </Context.Provider>
+    )
+  }
 }
 
-export default App;
+export default App

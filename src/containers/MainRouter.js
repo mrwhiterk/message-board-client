@@ -6,45 +6,26 @@ import Home from '../components/Home/Home'
 import Signup from '../components/auth/Signup/Signup'
 import Signin from '../components/auth/Signin/Signin'
 
-import { removeToken } from '../helperFunctions'
+import Context from '../components/Context/Context'
 
 import { checkToken } from '../axios-helpers'
 
 export default class MainRouter extends Component {
-  state = {
-    isAuthenticated: false
-  }
-
-  setAuthenticated = () => {
-    this.setState({ isAuthenticated: true })
-  }
-
-  unAuthenticate = () => {
-    this.setState({ isAuthenticated: false })
-    removeToken()
-  }
+  static contextType = Context
 
   componentDidMount() {
     if (checkToken()) {
-      this.setAuthenticated()
+      this.context.setAuthenticated()
     }
   }
 
   render() {
     let routes = null
-    if (!this.state.isAuthenticated) {
+    if (!this.context.isAuthenticated) {
       routes = (
         <Switch>
-          <Route path="/signup" render={() => <Signup />} />
-          <Route
-            path="/signin"
-            render={() => (
-              <Signin
-                setAuth={this.setAuthenticated}
-                isAuth={this.state.isAuthenticated}
-              />
-            )}
-          />
+          <Route path="/signup" component={Signup} />
+          <Route path="/signin" component={Signin} />
           <Redirect to="/signin" />
         </Switch>
       )
@@ -59,11 +40,7 @@ export default class MainRouter extends Component {
 
     return (
       <div>
-        <Nav
-          theme={this.props.theme}
-          isAuth={this.state.isAuthenticated}
-          unAuth={this.unAuthenticate}
-        />
+        <Nav theme={this.props.theme} />
 
         {routes}
       </div>

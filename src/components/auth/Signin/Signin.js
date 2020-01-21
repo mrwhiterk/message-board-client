@@ -14,6 +14,7 @@ import { red } from '@material-ui/core/colors'
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import { signin, checkToken } from '../../../axios-helpers'
 import { saveToLocalStorage } from '../../../helperFunctions'
+import Context from '../../Context/Context'
 
 const styles = theme => ({
   card: {
@@ -45,6 +46,8 @@ const styles = theme => ({
 })
 
 class Signin extends Component {
+  static contextType = Context
+
   state = {
     username: '',
     password: '',
@@ -64,23 +67,22 @@ class Signin extends Component {
 
     if (response.status === 200) {
       saveToLocalStorage(response.data.token)
-      this.props.setAuth()
+      this.context.setAuthenticated()
       checkToken()
     } else {
       let message = response.data.message
-
       this.setState({ error: message })
     }
   }
 
-  handleChange = ({ target: { name, value } }) => {
+  handleChange = (e) => {
     this.setState({
-      [name]: value
+      [e.target.name]: e.target.value
     })
   }
 
   render() {
-    const { classes  } = this.props
+    const { classes } = this.props
 
     let errMessage = (
       <Typography variant="body1" color="error">
@@ -89,10 +91,8 @@ class Signin extends Component {
       </Typography>
     )
 
-
     return (
       <div>
-        
         <ValidatorForm onSubmit={this.handleSubmit}>
           <Card className={classes.card}>
             <CardContent>

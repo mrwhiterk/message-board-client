@@ -40,12 +40,11 @@ export const checkToken = () => {
   } else {
     setAuthJWT(token)
 
-    return decoded;
+    return decoded
   }
 }
 
 export const getSecret = async () => {
-
   try {
     let response = await axios.get('/users')
 
@@ -53,5 +52,4 @@ export const getSecret = async () => {
   } catch (err) {
     console.log('cant hit', err)
   }
-
 }
