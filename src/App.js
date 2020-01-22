@@ -45,7 +45,7 @@ class App extends React.Component {
   setAuthenticated = data => {
     this.setState({
       isAuthenticated: true,
-      user: data ? data : null
+      user: data
     })
   }
 
