@@ -7,6 +7,7 @@ import MainRouter from './containers/MainRouter'
 
 import Context from './components/Context/Context'
 import { removeToken } from './helperFunctions'
+import { checkToken } from './axios-helpers'
 
 const theme = createMuiTheme({
   palette: {
@@ -31,11 +32,21 @@ const theme = createMuiTheme({
 class App extends React.Component {
   state = {
     isAuthenticated: false,
-    user: {}
+    user: null
   }
 
-  setAuthenticated = () => {
-    this.setState({ isAuthenticated: true })
+  componentDidMount() {
+    let user = checkToken()
+    if (user) {
+      this.setState({ user: user, isAuthenticated: true })
+    }
+  }
+
+  setAuthenticated = data => {
+    this.setState({
+      isAuthenticated: true,
+      user: data ? data : null
+    })
   }
 
   unAuthenticate = () => {

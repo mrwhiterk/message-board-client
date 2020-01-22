@@ -67,8 +67,10 @@ class Signin extends Component {
 
     if (response.status === 200) {
       saveToLocalStorage(response.data.token)
-      this.context.setAuthenticated()
-      checkToken()
+      let userData = checkToken()
+      this.context.setAuthenticated(userData)
+      this.props.history.push('/')
+      
     } else {
       let message = response.data.message
       this.setState({ error: message })

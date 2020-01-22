@@ -38,10 +38,11 @@ const isActive = (history, path) => {
 }
 
 class Nav extends Component {
-  static contextType = Context;
+  static contextType = Context
 
   render() {
     const { history, classes } = this.props
+
     let activeHistoryStyleFunc
     if (history.location.pathname === '/') {
       activeHistoryStyleFunc = isActive(history, '/')
@@ -49,12 +50,19 @@ class Nav extends Component {
       activeHistoryStyleFunc = isActive(history, 'auth')
     }
 
-    let routes = (
+    let routes = <></>
+
+    routes = (
       <>
         <NavLink to="/">
           <IconButton aria-label="Home" className={classes.icon}>
             <HomeIcon style={activeHistoryStyleFunc} />
           </IconButton>
+        </NavLink>
+        <NavLink to="/profile" activeClassName="active-nav-link">
+          <Button>
+            {this.context.user ? this.context.user.username : null}{' '}
+          </Button>
         </NavLink>
         <NavLink to="/signin" activeClassName="active-nav-link">
           <Button onClick={this.context.unAuthenticate}>Logout</Button>
@@ -65,6 +73,11 @@ class Nav extends Component {
     if (!this.context.isAuthenticated) {
       routes = (
         <>
+          <NavLink to="/">
+            <IconButton aria-label="Home" className={classes.icon}>
+              <HomeIcon style={activeHistoryStyleFunc} />
+            </IconButton>
+          </NavLink>
           <NavLink to="/signup" activeClassName="active-nav-link">
             <Button>Sign up</Button>
           </NavLink>
