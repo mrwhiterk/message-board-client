@@ -7,7 +7,6 @@ import { Card, CardContent, CardMedia } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import SocialFeed from '../SocialFeed/SocialFeed'
-import { getPosts } from '../../axios-helpers'
 
 const placeholder = 'https://www.fillmurray.com/640/360'
 

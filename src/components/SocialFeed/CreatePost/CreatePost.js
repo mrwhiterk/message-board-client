@@ -64,6 +64,7 @@ const styles = theme => ({
     marginLeft: 5
   }
 })
+
 class NewPost extends Component {
   static contextType = Context
 
@@ -86,7 +87,7 @@ class NewPost extends Component {
     }
 
     try {
-      let request = await createPost(this.formData)
+      await createPost(this.formData)
       
       this.setState({ text: '', photoName: '', photo: null })
       this.context.loadPosts()
@@ -106,12 +107,10 @@ class NewPost extends Component {
     const files = event.target.files
     let file = files[0]
 
-    //only one upload is allowed
     if (files.length > 1) {
       errs.push('only one file is allowed')
     }
 
-    //second is check image types only allow jpeg jpg and png
     let filetypes = ['.jpg', '.jpeg', '.png']
     let ext = file.name.match(/\.\w+/).join('')
 
@@ -119,7 +118,6 @@ class NewPost extends Component {
       errs.push('file type not supported')
     }
 
-    // check file size 5mb
     if (file.size > 5000000) {
       errs.push('file must not exceed 5mb')
     }
@@ -134,7 +132,6 @@ class NewPost extends Component {
   }
 
   render() {
-    console.log(this.state)
     const { classes } = this.props
 
     return (

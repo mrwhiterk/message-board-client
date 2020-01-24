@@ -63,11 +63,9 @@ class App extends React.Component {
         throw 'oops, something went wrong'
       }
 
-      console.log(response);
-
       this.setState({ posts: response.data })
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
