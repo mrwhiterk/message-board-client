@@ -31,9 +31,9 @@ class SocialFeed extends Component {
           SocialFeed
         </Typography>
         <Divider />
-        <CreatePost getAllPosts={this.props.getAllPosts} />
+        <CreatePost />
         <Divider />
-        <PostList posts={this.props.posts} />
+        <PostList />
       </Card>
     )
   }

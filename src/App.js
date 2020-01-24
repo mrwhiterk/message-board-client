@@ -7,7 +7,7 @@ import MainRouter from './containers/MainRouter'
 
 import Context from './components/Context/Context'
 import { removeToken } from './helperFunctions'
-import { checkToken } from './axios-helpers'
+import { checkToken, getPosts } from './axios-helpers'
 
 const theme = createMuiTheme({
   palette: {
@@ -32,7 +32,8 @@ const theme = createMuiTheme({
 class App extends React.Component {
   state = {
     isAuthenticated: false,
-    user: null
+    user: null,
+    posts: null
   }
 
   componentDidMount() {
@@ -54,6 +55,22 @@ class App extends React.Component {
     removeToken()
   }
 
+  loadPosts = async () => {
+    try {
+      let response = await getPosts()
+
+      if (response.status !== 200) {
+        throw 'oops, something went wrong'
+      }
+
+      console.log(response);
+
+      this.setState({ posts: response.data })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   render() {
     return (
       <Context.Provider
@@ -61,7 +78,9 @@ class App extends React.Component {
           isAuthenticated: this.state.isAuthenticated,
           user: this.state.user,
           setAuthenticated: this.setAuthenticated,
-          unAuthenticate: this.unAuthenticate
+          unAuthenticate: this.unAuthenticate,
+          loadPosts: this.loadPosts,
+          posts: this.state.posts
         }}
       >
         <MuiThemeProvider theme={theme}>

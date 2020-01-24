@@ -43,6 +43,7 @@ const styles = theme => ({
     margin: theme.spacing()
   }
 })
+
 class Post extends Component {
   static contextType = Context
 
@@ -51,37 +52,40 @@ class Post extends Component {
     likes: 0,
     comments: []
   }
-  componentDidMount = async () => { }
-  
-  componentWillReceiveProps = props => { }
-  
-  checkLike = likes => { }
-  
-  like = () => { }
-  
+
+  componentDidMount = async () => {}
+
+  componentWillReceiveProps = props => {}
+
+  checkLike = likes => {}
+
+  like = () => {}
+
   updateComments = comments => {
     this.setState({ comments: comments })
   }
 
-  deletePost = () => { }
-  
+  deletePost = () => {
+    console.log('deleted')
+  }
+
   render() {
     const { classes } = this.props
-    console.log(this.props);
+
     return (
       <Card className={classes.card}>
         <CardHeader
-          // avatar={<Avatar src={''} />}
-          // action={
-          //   this.props.post.postedBy._id === this.context.user.id && (
-          //     <IconButton onClick={this.deletePost}>
-          //       <DeleteIcon />
-          //     </IconButton>
-          //   )
-          // }
-          title={<Link to={''}>{this.props.username}</Link>}
-          // subheader={this.props.created}
-          // className={classes.cardHeader}
+          avatar={<Avatar src={'https://www.fillmurray.com/200/200'} />}
+          action={
+            this.props.postedBy._id === this.context.user._id && (
+              <IconButton onClick={this.deletePost}>
+                <DeleteIcon />
+              </IconButton>
+            )
+          }
+          title={<Link to={''}>{this.props.postedBy.username}</Link>}
+          subheader={this.props.created}
+          className={classes.cardHeader}
         />
         <CardContent className={classes.cardContent}>
           <Typography component="p" className={classes.text}>
@@ -128,11 +132,11 @@ class Post extends Component {
           <span>{this.state.comments.length}</span>
         </CardActions>
         <Divider />
-        {/* <Comments
-          postId={this.props.post._id}
+        <Comments
+          postId={this.props._id}
           comments={this.state.comments}
           updateComments={this.updateComments}
-        /> */}
+        />
       </Card>
     )
   }

@@ -89,7 +89,7 @@ class NewPost extends Component {
       let request = await createPost(this.formData)
       
       this.setState({ text: '', photoName: '', photo: null })
-      this.props.getAllPosts()
+      this.context.loadPosts()
     } catch (error) {
       console.log(error)
     }
@@ -172,7 +172,7 @@ class NewPost extends Component {
               >
                 <PhotoCameraIcon />
                 <span className={classes.photoName}>
-                  {this.state.photoName ? this.state.photoName : 'your entry'}
+                  {this.state.photoName ? this.state.photoName : <p>{' upload image'}</p>}
                 </span>
               </IconButton>
             </label>{' '}

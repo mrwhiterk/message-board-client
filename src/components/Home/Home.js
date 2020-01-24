@@ -29,29 +29,10 @@ const styles = theme => ({
  class Home extends Component {
    static contextType = Context
 
-   state = {
-     posts: null,
-     error: null
-   }
 
    componentDidMount() {
-     this.loadPosts()
+     this.context.loadPosts()
    }
-
-   loadPosts = async () => {
-     try {
-       let response = await getPosts()
-
-       if (response.status !== 200) {
-         throw 'oops, something went wrong'
-       }
-
-       this.setState({ posts: response.data })
-     } catch (error) {
-       this.setState({ error: error })
-     }
-   }
-
 
    render() {
      const { isAuthenticated } = this.context
@@ -61,7 +42,7 @@ const styles = theme => ({
          {isAuthenticated ? (
            <Grid container>
              <Grid item xs={7} sm={7}>
-               <SocialFeed posts={this.state.posts} getAllPosts={this.loadPosts} />
+               <SocialFeed />
              </Grid>
              <Grid item xs={5} sm={5}>
                News Feed
