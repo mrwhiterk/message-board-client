@@ -23,7 +23,6 @@ export const signin = async formBody => {
 
 export const createPost = async postInfo => {
   try {
-
     let response = await axios.post('/posts', postInfo)
 
     return response
@@ -36,6 +35,15 @@ export const getPosts = async () => {
   try {
     let response = await axios.get('/posts')
 
+    return response
+  } catch (error) {
+    return error.response
+  }
+}
+
+export const deletePost = async id => {
+  try {
+    let response = await axios.delete(`/posts/${id}`)
     return response
   } catch (error) {
     return error.response
@@ -67,6 +75,6 @@ export const getSecret = async () => {
 
     return response
   } catch (err) {
-    console.log(err);
+    console.log(err)
   }
 }

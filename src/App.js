@@ -7,7 +7,7 @@ import MainRouter from './containers/MainRouter'
 
 import Context from './components/Context/Context'
 import { removeToken } from './helperFunctions'
-import { checkToken, getPosts } from './axios-helpers'
+import { checkToken, getPosts, deletePost } from './axios-helpers'
 
 const theme = createMuiTheme({
   palette: {
@@ -63,9 +63,24 @@ class App extends React.Component {
         throw 'oops, something went wrong'
       }
 
-      this.setState({ posts: response.data })
+      this.setState({ posts: response.data.reverse() })
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  deletePost = async id => {
+    try {
+      let response = await deletePost(id)
+
+      this.setState({
+        posts: response.data.posts.reverse()
+      })
+
+      return response.data.deletedPost
+    } catch (error) {
+      console.log(error)
+      return error
     }
   }
 
@@ -78,7 +93,8 @@ class App extends React.Component {
           setAuthenticated: this.setAuthenticated,
           unAuthenticate: this.unAuthenticate,
           loadPosts: this.loadPosts,
-          posts: this.state.posts
+          posts: this.state.posts,
+          deletePost: this.deletePost
         }}
       >
         <MuiThemeProvider theme={theme}>

@@ -11,7 +11,18 @@ import Divider from '@material-ui/core/Divider'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import Comments from '../Comments/Comments'
+import Notifications, { notify } from 'react-notify-toast'
 import Context from '../../Context/Context'
+
+const toastColor = {
+  background: '#3f51b5',
+  text: '#fff'
+}
+
+const errorToastColor = {
+  background: '#f23535',
+  text: '#fff'
+}
 
 const styles = theme => ({
   card: {
@@ -53,7 +64,26 @@ class Post extends Component {
     comments: []
   }
 
-  componentDidMount = async () => {}
+  componentDidMount = async () => {
+    this.toast = notify.createShowQueue()
+  }
+
+  deletePost = async () => {
+    const { deletePost } = this.context
+
+    let deletedPost = await deletePost(this.props._id)
+
+    if (deletedPost.text) {
+      this.toast(
+        `Post: ${deletedPost.text} by ${deletedPost.postedBy.username} was deleted`,
+        'custom',
+        4000,
+        toastColor
+      )
+    } else {
+      this.toast(`${deletedPost}`, 'custom', 4000, errorToastColor)
+    }
+  }
 
   componentWillReceiveProps = props => {}
 
@@ -65,12 +95,10 @@ class Post extends Component {
     this.setState({ comments: comments })
   }
 
-  deletePost = () => {
-    console.log('deleted')
-  }
-
   render() {
     const { classes } = this.props
+
+    console.log(this.props)
 
     return (
       <Card className={classes.card}>
