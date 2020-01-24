@@ -28,12 +28,12 @@ class SocialFeed extends Component {
     return (
       <Card className={classes.card}>
         <Typography type="title" className={classes.title}>
-          NewsFeed
+          SocialFeed
         </Typography>
         <Divider />
-        <CreatePost />
+        <CreatePost getAllPosts={this.props.getAllPosts} />
         <Divider />
-        <PostList />
+        <PostList posts={this.props.posts} />
       </Card>
     )
   }

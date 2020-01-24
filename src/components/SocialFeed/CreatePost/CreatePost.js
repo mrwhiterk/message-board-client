@@ -66,33 +66,33 @@ const styles = theme => ({
 })
 class NewPost extends Component {
   static contextType = Context
+
   state = {
     text: '',
     photoName: '',
     photo: null
   }
+
   componentDidMount = () => {
     this.toast = notify.createShowQueue()
     this.formData = new FormData()
   }
 
   handleSubmitPost = async event => {
-    event.preventDefault();
+    event.preventDefault()
 
     for (const key in this.state) {
       this.formData.set(key, this.state[key])
     }
 
     try {
-      let request = await createPost(this.formData);
+      let request = await createPost(this.formData)
       
-      console.log(request);
+      this.setState({ text: '', photoName: '', photo: null })
+      this.props.getAllPosts()
     } catch (error) {
-      console.log(error);
-      
+      console.log(error)
     }
-
-
   }
 
   handleChange = e => {
@@ -102,10 +102,9 @@ class NewPost extends Component {
   }
 
   handleFileUpload = event => {
-    
     let errs = []
-    const files = event.target.files;
-    let file = files[0];
+    const files = event.target.files
+    let file = files[0]
 
     //only one upload is allowed
     if (files.length > 1) {
@@ -113,7 +112,7 @@ class NewPost extends Component {
     }
 
     //second is check image types only allow jpeg jpg and png
-    let filetypes = ['.jpg','.jpeg','.png']
+    let filetypes = ['.jpg', '.jpeg', '.png']
     let ext = file.name.match(/\.\w+/).join('')
 
     if (!filetypes.includes(ext)) {
@@ -129,14 +128,13 @@ class NewPost extends Component {
       errs.forEach(err => this.toast(err, 'custom', 4000, errorToastColor))
     } else {
       this.toast('Successfully uploaded', 'custom', 4000, toastColor)
-      this.setState({photo: file, photoName: file.name})
+      this.setState({ photo: file, photoName: file.name })
       this.formData.set('photo', file)
     }
-
   }
 
   render() {
-    console.log(this.state);
+    console.log(this.state)
     const { classes } = this.props
 
     return (
@@ -173,12 +171,12 @@ class NewPost extends Component {
                 component="span"
               >
                 <PhotoCameraIcon />
-              <span className={classes.photoName}>{this.state.photoName ? this.state.photoName: 'your entry'}</span>
-                
+                <span className={classes.photoName}>
+                  {this.state.photoName ? this.state.photoName : 'your entry'}
+                </span>
               </IconButton>
             </label>{' '}
-            <span className={classes.filename}>
-            </span>
+            <span className={classes.filename}></span>
             {this.state.error && (
               <Typography component="p" color="error">
                 <ErrorIcon color="error" className={classes.error}>

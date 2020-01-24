@@ -7,6 +7,7 @@ import { Card, CardContent, CardMedia } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import SocialFeed from '../SocialFeed/SocialFeed'
+import { getPosts } from '../../axios-helpers'
 
 const placeholder = 'https://www.fillmurray.com/640/360'
 
@@ -26,46 +27,66 @@ const styles = theme => ({
 })
 
  class Home extends Component {
+   static contextType = Context
 
-  static contextType = Context;
+   state = {
+     posts: null,
+     error: null
+   }
 
-  componentDidUpdate() {
+   componentDidMount() {
+     this.loadPosts()
+   }
 
-  }
+   loadPosts = async () => {
+     try {
+       let response = await getPosts()
 
-  render() {
-    const { isAuthenticated } = this.context;
-    const { classes } = this.props;
-    return (
-      <div>
-        {
-          isAuthenticated ? (
-            <Grid container>
-              <Grid item xs={7} sm={7}>
-                <SocialFeed />
-              </Grid>
-              <Grid item xs={5} sm={5}>
-                Social Feed
-              </Grid>
-            </Grid>
-          ) : (
-              <Card className={classes.card}>
-                <Typography type="headline" variant="h2" className={classes.title}>
-                  Home Page
-                </Typography>
-                <CardMedia className={classes.media} image={placeholder} title="Billy Murray" />
-                <CardContent>
-                  <Typography type="body1" variant="body1">
-                    Welcome to reddit before the real reddit
-                  </Typography>
-                </CardContent>
-              </Card>
-          )
-        }
-        
-      </div>
-    )
-  }
+       if (response.status !== 200) {
+         throw 'oops, something went wrong'
+       }
+
+       this.setState({ posts: response.data })
+     } catch (error) {
+       this.setState({ error: error })
+     }
+   }
+
+
+   render() {
+     const { isAuthenticated } = this.context
+     const { classes } = this.props
+     return (
+       <div>
+         {isAuthenticated ? (
+           <Grid container>
+             <Grid item xs={7} sm={7}>
+               <SocialFeed posts={this.state.posts} getAllPosts={this.loadPosts} />
+             </Grid>
+             <Grid item xs={5} sm={5}>
+               News Feed
+             </Grid>
+           </Grid>
+         ) : (
+           <Card className={classes.card}>
+             <Typography type="headline" variant="h2" className={classes.title}>
+               Home Page
+             </Typography>
+             <CardMedia
+               className={classes.media}
+               image={placeholder}
+               title="Billy Murray"
+             />
+             <CardContent>
+               <Typography type="body1" variant="body1">
+                 Welcome to reddit before the real reddit
+               </Typography>
+             </CardContent>
+           </Card>
+         )}
+       </div>
+     )
+   }
  }
 
  export default withStyles(styles)(Home)
