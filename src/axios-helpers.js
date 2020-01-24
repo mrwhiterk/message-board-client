@@ -21,6 +21,27 @@ export const signin = async formBody => {
   }
 }
 
+export const createPost = async postInfo => {
+  try {
+
+    let response = await axios.post('/posts', postInfo)
+
+    return response
+  } catch (err) {
+    return err.response
+  }
+}
+
+export const getPosts = async () => {
+  try {
+    let response = await axios.get('/posts')
+
+    return response
+  } catch (error) {
+    return error.response
+  }
+}
+
 export const checkToken = () => {
   const token = localStorage.getItem('token')
   if (!token) {

@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton'
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera'
 import Notifications, { notify } from 'react-notify-toast'
 import Context from '../../Context/Context'
-// import { createPost } from '../lib/api';
+import { createPost } from '../../../axios-helpers'
 
 const errorToastColor = {
   background: '#f23535',
@@ -69,23 +69,76 @@ class NewPost extends Component {
   state = {
     text: '',
     photoName: '',
-    error: ''
+    photo: null
   }
-  componentDidMount = () => { }
-  
-  handleSubmitPost = async event => { }
-  
-  handleChange = name => event => {
+  componentDidMount = () => {
+    this.toast = notify.createShowQueue()
+    this.formData = new FormData()
+  }
+
+  handleSubmitPost = async event => {
+    event.preventDefault();
+
+    for (const key in this.state) {
+      this.formData.set(key, this.state[key])
+    }
+
+    try {
+      let request = await createPost(this.formData);
+      
+      console.log(request);
+    } catch (error) {
+      console.log(error);
+      
+    }
+
+
+  }
+
+  handleChange = e => {
     this.setState({
-      text: event.target.value
+      [e.target.name]: e.target.value
     })
   }
-  handleFileUpload = event => { }
-  
+
+  handleFileUpload = event => {
+    
+    let errs = []
+    const files = event.target.files;
+    let file = files[0];
+
+    //only one upload is allowed
+    if (files.length > 1) {
+      errs.push('only one file is allowed')
+    }
+
+    //second is check image types only allow jpeg jpg and png
+    let filetypes = ['.jpg','.jpeg','.png']
+    let ext = file.name.match(/\.\w+/).join('')
+
+    if (!filetypes.includes(ext)) {
+      errs.push('file type not supported')
+    }
+
+    // check file size 5mb
+    if (file.size > 5000000) {
+      errs.push('file must not exceed 5mb')
+    }
+
+    if (errs.length) {
+      errs.forEach(err => this.toast(err, 'custom', 4000, errorToastColor))
+    } else {
+      this.toast('Successfully uploaded', 'custom', 4000, toastColor)
+      this.setState({photo: file, photoName: file.name})
+      this.formData.set('photo', file)
+    }
+
+  }
+
   render() {
+    console.log(this.state);
     const { classes } = this.props
 
-    // notify.show('Toasty!')
     return (
       <div className={classes.root}>
         <Notifications options={{ zIndex: 200, top: '90px' }} />
@@ -100,8 +153,9 @@ class NewPost extends Component {
               placeholder="Share your thoughts ..."
               multiline
               rows="3"
+              name="text"
               value={this.state.text}
-              onChange={this.handleChange('text')}
+              onChange={this.handleChange}
               className={classes.textField}
               margin="normal"
             />
@@ -118,11 +172,12 @@ class NewPost extends Component {
                 className={classes.photoButton}
                 component="span"
               >
-                <PhotoCameraIcon /> Your profile picture here
+                <PhotoCameraIcon />
+              <span className={classes.photoName}>{this.state.photoName ? this.state.photoName: 'your entry'}</span>
+                
               </IconButton>
             </label>{' '}
             <span className={classes.filename}>
-              {this.state.photo ? this.state.photo.name : ''}
             </span>
             {this.state.error && (
               <Typography component="p" color="error">
@@ -138,6 +193,7 @@ class NewPost extends Component {
               color="primary"
               variant="contained"
               onClick={this.handleSubmitPost}
+              disabled={!this.state.text}
               className={classes.submit}
             >
               POST
