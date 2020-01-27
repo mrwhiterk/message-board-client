@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton'
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera'
 import Notifications, { notify } from 'react-notify-toast'
 import Context from '../../Context/Context'
-import { createPost } from '../../../axios-helpers'
+
 
 const errorToastColor = {
   background: '#f23535',
@@ -92,11 +92,11 @@ class NewPost extends Component {
     }
 
     try {
-      await createPost(this.formData)
+      this.context.createPost(this.formData)
 
       this.setState({ text: '', photoName: '', photo: null})
       
-      this.context.loadPosts()
+      // this.context.loadPosts()
     } catch (error) {
       console.log(error)
     }

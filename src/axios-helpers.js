@@ -68,13 +68,3 @@ export const checkToken = () => {
   }
 }
 
-// test auth func
-export const getSecret = async () => {
-  try {
-    let response = await axios.get('/users')
-
-    return response
-  } catch (err) {
-    console.log(err)
-  }
-}
