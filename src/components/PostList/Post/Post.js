@@ -98,7 +98,6 @@ class Post extends Component {
   render() {
     const { classes } = this.props
 
-    console.log(this.props)
 
     return (
       <Card className={classes.card}>

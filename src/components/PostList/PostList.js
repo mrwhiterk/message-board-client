@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import Post from './Post/Post'
-import Context  from '../Context/Context'
+import Context from '../Context/Context'
 
 class PostList extends Component {
-  
-  static contextType = Context;
+  static contextType = Context
 
   render() {
     let { posts } = this.context

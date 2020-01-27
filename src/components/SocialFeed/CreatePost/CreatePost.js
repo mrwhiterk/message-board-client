@@ -76,11 +76,16 @@ class NewPost extends Component {
 
   componentDidMount = () => {
     this.toast = notify.createShowQueue()
+    this.clearForm()
+  }
+
+  clearForm = () => {
     this.formData = new FormData()
   }
 
   handleSubmitPost = async event => {
     event.preventDefault()
+
 
     for (const key in this.state) {
       this.formData.set(key, this.state[key])
@@ -88,8 +93,9 @@ class NewPost extends Component {
 
     try {
       await createPost(this.formData)
+
+      this.setState({ text: '', photoName: '', photo: null})
       
-      this.setState({ text: '', photoName: '', photo: null })
       this.context.loadPosts()
     } catch (error) {
       console.log(error)
@@ -107,28 +113,30 @@ class NewPost extends Component {
     const files = event.target.files
     let file = files[0]
 
+    
     if (files.length > 1) {
       errs.push('only one file is allowed')
     }
-
+    
     let filetypes = ['.jpg', '.jpeg', '.png']
     let ext = file.name.match(/\.\w+/).join('')
-
+    
     if (!filetypes.includes(ext)) {
       errs.push('file type not supported')
     }
-
+    
     if (file.size > 5000000) {
       errs.push('file must not exceed 5mb')
     }
-
+    
     if (errs.length) {
       errs.forEach(err => this.toast(err, 'custom', 4000, errorToastColor))
     } else {
       this.toast('Successfully uploaded', 'custom', 4000, toastColor)
       this.setState({ photo: file, photoName: file.name })
-      this.formData.set('photo', file)
+
     }
+    event.target.value = "";
   }
 
   render() {
@@ -169,7 +177,11 @@ class NewPost extends Component {
               >
                 <PhotoCameraIcon />
                 <span className={classes.photoName}>
-                  {this.state.photoName ? this.state.photoName : <p>{' upload image'}</p>}
+                  {this.state.photoName ? (
+                    this.state.photoName
+                  ) : (
+                    <p>{' upload image'}</p>
+                  )}
                 </span>
               </IconButton>
             </label>{' '}
