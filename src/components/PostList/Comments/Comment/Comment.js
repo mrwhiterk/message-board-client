@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { CardHeader } from '@material-ui/core'
-import TextField from '@material-ui/core/TextField'
-import Avatar from '@material-ui/core/Avatar'
-import DeleteIcon from '@material-ui/icons/Delete'
-import IconButton from '@material-ui/core/IconButton'
+// import { CardHeader } from '@material-ui/core'
+// import TextField from '@material-ui/core/TextField'
+// import Avatar from '@material-ui/core/Avatar'
+// import DeleteIcon from '@material-ui/icons/Delete'
+// import IconButton from '@material-ui/core/IconButton'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
-import Context from '../../../Context/Context'
+// import Context from '../../../Context/Context'
 
 const styles = theme => ({
   cardHeader: {

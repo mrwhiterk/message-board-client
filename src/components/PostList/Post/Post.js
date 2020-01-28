@@ -11,7 +11,7 @@ import Divider from '@material-ui/core/Divider'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import Comments from '../Comments/Comments'
-import Notifications, { notify } from 'react-notify-toast'
+import { notify } from 'react-notify-toast'
 import Context from '../../Context/Context'
 
 const toastColor = {

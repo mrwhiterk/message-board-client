@@ -60,7 +60,7 @@ class App extends React.Component {
       let response = await getPosts()
 
       if (response.status !== 200) {
-        throw 'oops, something went wrong'
+        throw new Error('oops, something went wrong')
       }
 
       this.setState({ posts: response.data })
