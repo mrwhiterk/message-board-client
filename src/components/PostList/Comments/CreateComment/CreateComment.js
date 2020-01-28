@@ -40,21 +40,47 @@ const styles = theme => ({
   }
 })
 
-class Comment extends Component {
+class CreateComment extends Component {
+  state = {
+    text: ''
+  }
+
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value })
+  }
+
+  addComment = (e, body) => {
+    this.props.addComment(e, body)
+    this.setState({ text: '' })
+  }
+
   render() {
-    const { classes, comment } = this.props
+    let { classes } = this.props
 
     return (
-      <p className={classes.commentText}>
-        <Link to={''} className={classes.userLink}>
-          {comment.postedBy.username}
-        </Link>
-        <br />
-        {comment.text}
-        <span className={classes.commentDate}>{comment.created}</span>
-      </p>
+      <CardHeader
+        avatar={
+          <Avatar
+            className={classes.smallAvatar}
+            src={'https://www.fillmurray.com/200/200'}
+          />
+        }
+        title={
+          <TextField
+            onKeyDown={e => this.addComment(e, this.state)}
+            multiline
+            value={this.state.text}
+            name="text"
+            onChange={this.handleChange}
+            placeholder="Write something ..."
+            className={classes.commentField}
+            margin="normal"
+          />
+        }
+        className={classes.cardHeader}
+      />
     )
   }
 }
 
-export default withStyles(styles)(Comment)
+export default withStyles(styles)(CreateComment)

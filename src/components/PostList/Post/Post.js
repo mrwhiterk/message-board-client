@@ -93,16 +93,12 @@ class Post extends Component {
   like = () => {}
 
   updateComments = comment => {
-    this.setState({ comments: [...this.state.comments, comment] })
+    this.setState({ comments: [comment, ...this.state.comments] })
   }
 
   removeComment = id => {
-    console.log('hit')
-    console.log(id)
     this.setState({
       comments: [...this.state.comments].filter(item => {
-        console.log(item._id.toString())
-        console.log('query', id.toString())
         return item._id.toString() !== id.toString()
       })
     })
@@ -173,7 +169,7 @@ class Post extends Component {
         <Divider />
         <Comments
           postId={this.props._id}
-          comments={this.state.comments.reverse()}
+          comments={this.state.comments}
           updateComments={this.updateComments}
           removeComment={this.removeComment}
         />

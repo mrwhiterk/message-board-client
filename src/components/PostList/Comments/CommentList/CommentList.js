@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import Context from '../../../Context/Context'
+import Comment from '../Comment/Comment'
 
 const styles = theme => ({
   cardHeader: {
@@ -40,21 +41,40 @@ const styles = theme => ({
   }
 })
 
-class Comment extends Component {
-  render() {
-    const { classes, comment } = this.props
+class CommentList extends Component {
+  static contextType = Context
 
-    return (
-      <p className={classes.commentText}>
-        <Link to={''} className={classes.userLink}>
-          {comment.postedBy.username}
-        </Link>
-        <br />
-        {comment.text}
-        <span className={classes.commentDate}>{comment.created}</span>
-      </p>
-    )
+  render() {
+    let { classes, comments, deleteComment } = this.props
+    let { user } = this.context
+
+    let list = comments.map((item, i) => {
+      return (
+        <CardHeader
+          avatar={
+            <Avatar
+              className={classes.smallAvatar}
+              src={'https://www.fillmurray.com/200/200'}
+            />
+          }
+          action={
+            item.postedBy._id === user._id && (
+              <IconButton
+                onClick={() => deleteComment(this.props.postId, item._id)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            )
+          }
+          title={<Comment comment={item} classes={this.props.classes} />}
+          name="item"
+          className={classes.cardHeader}
+          key={i}
+        />
+      )
+    })
+    return <div>{list}</div>
   }
 }
 
-export default withStyles(styles)(Comment)
+export default withStyles(styles)(CommentList)
