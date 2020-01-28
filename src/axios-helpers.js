@@ -59,10 +59,7 @@ export const addComment = async (id, commentData) => {
   }
 }
 
-export const deleteComment = async (e, commentId, id) => {
-  console.log(id)
-  console.log(e)
-  console.log(commentId)
+export const deleteComment = async (commentId, id) => {
   try {
     let response = await axios.delete(`/posts/comments/${commentId}/${id}`)
     return response

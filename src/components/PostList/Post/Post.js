@@ -96,6 +96,18 @@ class Post extends Component {
     this.setState({ comments: [...this.state.comments, comment] })
   }
 
+  removeComment = id => {
+    console.log('hit')
+    console.log(id)
+    this.setState({
+      comments: [...this.state.comments].filter(item => {
+        console.log(item._id.toString())
+        console.log('query', id.toString())
+        return item._id.toString() !== id.toString()
+      })
+    })
+  }
+
   render() {
     const { classes } = this.props
 
@@ -163,6 +175,7 @@ class Post extends Component {
           postId={this.props._id}
           comments={this.state.comments.reverse()}
           updateComments={this.updateComments}
+          removeComment={this.removeComment}
         />
       </Card>
     )
