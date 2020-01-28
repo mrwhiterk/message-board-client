@@ -61,7 +61,7 @@ class Post extends Component {
   state = {
     like: false,
     likes: 0,
-    comments: []
+    comments: this.props.comments
   }
 
   componentDidMount = async () => {
@@ -71,17 +71,18 @@ class Post extends Component {
   deletePost = async () => {
     const { deletePost } = this.context
 
-    let deletedPost = await deletePost(this.props._id)
-
-    if (deletedPost.text) {
-      this.toast(
-        `Post: ${deletedPost.text} by ${deletedPost.postedBy.username} was deleted`,
-        'custom',
-        4000,
-        toastColor
-      )
-    } else {
-      this.toast(`${deletedPost}`, 'custom', 4000, errorToastColor)
+    try {
+      let deletedPost = await deletePost(this.props._id)
+      if (deletedPost.text) {
+        this.toast(
+          `Post: ${deletedPost.text} by ${deletedPost.postedBy.username} was deleted`,
+          'custom',
+          4000,
+          toastColor
+        )
+      }
+    } catch (error) {
+      this.toast(`${error}`, 'custom', 4000, errorToastColor)
     }
   }
 
@@ -91,13 +92,12 @@ class Post extends Component {
 
   like = () => {}
 
-  updateComments = comments => {
-    this.setState({ comments: comments })
+  updateComments = comment => {
+    this.setState({ comments: [...this.state.comments, comment] })
   }
 
   render() {
     const { classes } = this.props
-
 
     return (
       <Card className={classes.card}>
@@ -161,7 +161,7 @@ class Post extends Component {
         <Divider />
         <Comments
           postId={this.props._id}
-          comments={this.state.comments}
+          comments={this.state.comments.reverse()}
           updateComments={this.updateComments}
         />
       </Card>

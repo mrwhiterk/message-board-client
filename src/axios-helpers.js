@@ -50,6 +50,27 @@ export const deletePost = async id => {
   }
 }
 
+export const addComment = async (id, commentData) => {
+  try {
+    let response = await axios.post(`/posts/comments/${id}`, commentData)
+    return response
+  } catch (error) {
+    return error.response
+  }
+}
+
+export const deleteComment = async (e, commentId, id) => {
+  console.log(id)
+  console.log(e)
+  console.log(commentId)
+  try {
+    let response = await axios.delete(`/posts/comments/${commentId}/${id}`)
+    return response
+  } catch (error) {
+    return error.response
+  }
+}
+
 export const checkToken = () => {
   const token = localStorage.getItem('token')
   if (!token) {
@@ -67,4 +88,3 @@ export const checkToken = () => {
     return userData
   }
 }
-
