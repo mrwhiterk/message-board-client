@@ -10,7 +10,7 @@ import CommentIcon from '@material-ui/icons/Comment'
 import Divider from '@material-ui/core/Divider'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
-import Comments from '../Comments/Comments'
+import Comments from './Comments/Comments'
 import { notify } from 'react-notify-toast'
 import Context from '../../Context/Context'
 import { likePost } from '../../../axios-helpers'
@@ -92,7 +92,7 @@ class Post extends Component {
     try {
       let response = await likePost(this.props._id)
 
-      if (response.status == 200) {
+      if (response.status === 200) {
         this.context.updatePostLikes(this.props._id, this.context.user._id)
       }
     } catch (error) {

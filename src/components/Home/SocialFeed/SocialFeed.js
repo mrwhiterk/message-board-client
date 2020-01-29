@@ -3,8 +3,8 @@ import { withStyles } from '@material-ui/core/styles'
 import { Card } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
-import CreatePost from '../SocialFeed/CreatePost/CreatePost'
-import PostList from '../PostList/PostList'
+import CreatePost from './CreatePost/CreatePost'
+import PostList from '../../PostList/PostList'
 
 const styles = theme => ({
   card: {

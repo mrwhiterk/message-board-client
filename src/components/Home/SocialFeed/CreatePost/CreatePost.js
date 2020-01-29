@@ -9,8 +9,7 @@ import { withStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera'
 import Notifications, { notify } from 'react-notify-toast'
-import Context from '../../Context/Context'
-
+import Context from '../../../Context/Context'
 
 const errorToastColor = {
   background: '#f23535',
@@ -86,7 +85,6 @@ class NewPost extends Component {
   handleSubmitPost = async event => {
     event.preventDefault()
 
-
     for (const key in this.state) {
       this.formData.set(key, this.state[key])
     }
@@ -94,8 +92,8 @@ class NewPost extends Component {
     try {
       this.context.createPost(this.formData)
 
-      this.setState({ text: '', photoName: '', photo: null})
-      
+      this.setState({ text: '', photoName: '', photo: null })
+
       // this.context.loadPosts()
     } catch (error) {
       console.log(error)
@@ -113,30 +111,28 @@ class NewPost extends Component {
     const files = event.target.files
     let file = files[0]
 
-    
     if (files.length > 1) {
       errs.push('only one file is allowed')
     }
-    
+
     let filetypes = ['.jpg', '.jpeg', '.png']
     let ext = file.name.match(/\.\w+/).join('')
-    
+
     if (!filetypes.includes(ext)) {
       errs.push('file type not supported')
     }
-    
+
     if (file.size > 5000000) {
       errs.push('file must not exceed 5mb')
     }
-    
+
     if (errs.length) {
       errs.forEach(err => this.toast(err, 'custom', 4000, errorToastColor))
     } else {
       this.toast('Successfully uploaded', 'custom', 4000, toastColor)
       this.setState({ photo: file, photoName: file.name })
-
     }
-    event.target.value = "";
+    event.target.value = ''
   }
 
   render() {
