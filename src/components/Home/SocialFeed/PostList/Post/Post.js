@@ -59,13 +59,8 @@ const styles = theme => ({
 class Post extends Component {
   static contextType = Context
 
-  state = {
-    comments: []
-  }
-
   componentDidMount = async () => {
     this.toast = notify.createShowQueue()
-    this.setState({ comments: this.props.comments })
   }
 
   deletePost = async () => {
@@ -100,15 +95,11 @@ class Post extends Component {
     }
   }
 
-  updateComments = comment => {
-    this.setState(prevState => ({ comments: [...prevState.comments, comment] }))
-  }
-
-  removeComment = id => {
-    this.setState({
-      comments: [...this.state.comments].filter(item => item._id !== id)
-    })
-  }
+  // removeComment = id => {
+  //   this.setState({
+  //     comments: [...this.props.comments].filter(item => item._id !== id)
+  //   })
+  // }
 
   render() {
     const { classes } = this.props
@@ -170,14 +161,14 @@ class Post extends Component {
           >
             <CommentIcon />
           </IconButton>{' '}
-          <span>{this.state.comments.length}</span>
+          <span>{this.props.comments.length}</span>
         </CardActions>
         <Divider />
 
         <Comments
           postId={this.props._id}
-          comments={this.state.comments}
-          updateComments={this.updateComments}
+          comments={this.props.comments}
+          // updateComments={this.updateComments}
           removeComment={this.removeComment}
         />
       </Card>

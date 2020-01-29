@@ -44,7 +44,7 @@ class Comments extends Component {
     if (e.keyCode === 13) {
       try {
         let response = await addComment(this.props.postId, formData)
-        this.props.updateComments(response.data)
+        this.context.updateComments(response.data, this.props.postId)
 
         return response.data
       } catch (e) {

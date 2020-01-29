@@ -90,6 +90,28 @@ class App extends React.Component {
     })
   }
 
+  updateComments = (comment, postId) => {
+    let postsCopy = [...this.state.posts]
+    let postIndex = this.state.posts.findIndex(x => x._id === postId)
+
+    postsCopy[postIndex].comments.push(comment)
+
+    this.setState({ posts: postsCopy })
+  }
+
+  removeComment = (commentId, postId) => {
+    let postsCopy = Object.assign([], this.state.posts)
+    let postIndex = this.state.posts.findIndex(x => x._id === postId)
+
+    postsCopy[postIndex].comments = postsCopy[postIndex].comments.filter(
+      item => item._id !== commentId
+    )
+
+    this.setState({
+      posts: postsCopy
+    })
+  }
+
   deletePost = async id => {
     try {
       let response = await deletePost(id)
@@ -117,7 +139,9 @@ class App extends React.Component {
           posts: this.state.posts,
           deletePost: this.deletePost,
           createPost: this.createPost,
-          updatePostLikes: this.updatePostLikes
+          updatePostLikes: this.updatePostLikes,
+          updateComments: this.updateComments,
+          removeComment: this.removeComment
         }}
       >
         <MuiThemeProvider theme={theme}>
