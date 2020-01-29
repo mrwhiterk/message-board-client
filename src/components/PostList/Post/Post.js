@@ -60,8 +60,6 @@ class Post extends Component {
   static contextType = Context
 
   state = {
-    like: false,
-    likes: 0,
     comments: []
   }
 
@@ -88,14 +86,14 @@ class Post extends Component {
     }
   }
 
-  checkLike = likes => {}
+  checkLike = () => this.props.likes.includes(this.context.user._id)
 
   like = async () => {
     try {
       let response = await likePost(this.props._id)
 
       if (response.status == 200) {
-        this.context.updatePost(this.props._id, this.context.user._id)
+        this.context.updatePostLikes(this.props._id, this.context.user._id)
       }
     } catch (error) {
       console.log(error)
@@ -103,14 +101,12 @@ class Post extends Component {
   }
 
   updateComments = comment => {
-    this.setState(prevState => ({ comments: [comment, ...prevState.comments] }))
+    this.setState(prevState => ({ comments: [...prevState.comments, comment] }))
   }
 
   removeComment = id => {
     this.setState({
-      comments: [...this.state.comments].filter(item => {
-        return item._id.toString() !== id.toString()
-      })
+      comments: [...this.state.comments].filter(item => item._id !== id)
     })
   }
 
@@ -147,7 +143,7 @@ class Post extends Component {
           )}
         </CardContent>
         <CardActions>
-          {this.state.like ? (
+          {this.checkLike() ? (
             <IconButton
               onClick={this.like}
               className={classes.button}
@@ -174,6 +170,7 @@ class Post extends Component {
           >
             <CommentIcon />
           </IconButton>{' '}
+          <span>{this.state.comments.length}</span>
         </CardActions>
         <Divider />
 

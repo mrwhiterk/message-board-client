@@ -74,21 +74,16 @@ class App extends React.Component {
     this.setState({ posts: [post, ...this.state.posts] })
   }
 
-  updatePost = async (postId, userId) => {
+  updatePostLikes = async (postId, userId) => {
     let postsCopy = [...this.state.posts]
     let postIndex = this.state.posts.findIndex(x => x._id === postId)
     let post = this.state.posts[postIndex]
-    let newLikes = null
 
     if (post.likes.includes(userId)) {
-      newLikes = post.likes.filter(
-        item => item.toString() !== userId.toString()
-      )
+      postsCopy[postIndex].likes = post.likes.filter(item => item !== userId)
     } else {
-      newLikes = post.likes.concat(userId)
+      postsCopy[postIndex].likes = post.likes.concat(userId)
     }
-
-    postsCopy[postIndex].likes = newLikes
 
     this.setState({
       posts: postsCopy
@@ -122,7 +117,7 @@ class App extends React.Component {
           posts: this.state.posts,
           deletePost: this.deletePost,
           createPost: this.createPost,
-          updatePost: this.updatePost
+          updatePostLikes: this.updatePostLikes
         }}
       >
         <MuiThemeProvider theme={theme}>
