@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { Card } from '@material-ui/core'
-import Typography from '@material-ui/core/Typography'
+// import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import CreatePost from './CreatePost/CreatePost'
-import PostList from '../../PostList/PostList'
+import PostList from './PostList/PostList'
 
 const styles = theme => ({
   card: {
@@ -27,9 +27,9 @@ class SocialFeed extends Component {
     const { classes } = this.props
     return (
       <Card className={classes.card}>
-        <Typography type="title" className={classes.title}>
+        {/* <Typography type="title" className={classes.title}>
           SocialFeed
-        </Typography>
+        </Typography> */}
         <Divider />
         <CreatePost />
         <Divider />

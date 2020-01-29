@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { Card, CardContent, CardMedia } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
-import SocialFeed from '../SocialFeed/SocialFeed'
+import SocialFeed from './SocialFeed/SocialFeed'
 
 const placeholder = 'https://www.fillmurray.com/640/360'
 
@@ -25,48 +25,47 @@ const styles = theme => ({
   }
 })
 
- class Home extends Component {
-   static contextType = Context
+class Home extends Component {
+  static contextType = Context
 
+  componentDidMount() {
+    this.context.loadPosts()
+  }
 
-   componentDidMount() {
-     this.context.loadPosts()
-   }
+  render() {
+    const { isAuthenticated } = this.context
+    const { classes } = this.props
+    return (
+      <div>
+        {isAuthenticated ? (
+          <Grid container>
+            <Grid item xs={7} sm={7}>
+              <SocialFeed />
+            </Grid>
+            {/* <Grid item xs={5} sm={5}>
+              News Feed
+            </Grid> */}
+          </Grid>
+        ) : (
+          <Card className={classes.card}>
+            <Typography type="headline" variant="h2" className={classes.title}>
+              Home Page
+            </Typography>
+            <CardMedia
+              className={classes.media}
+              image={placeholder}
+              title="Billy Murray"
+            />
+            <CardContent>
+              <Typography type="body1" variant="body1">
+                Welcome to reddit before the real reddit
+              </Typography>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+    )
+  }
+}
 
-   render() {
-     const { isAuthenticated } = this.context
-     const { classes } = this.props
-     return (
-       <div>
-         {isAuthenticated ? (
-           <Grid container>
-             <Grid item xs={7} sm={7}>
-               <SocialFeed />
-             </Grid>
-             <Grid item xs={5} sm={5}>
-               News Feed
-             </Grid>
-           </Grid>
-         ) : (
-           <Card className={classes.card}>
-             <Typography type="headline" variant="h2" className={classes.title}>
-               Home Page
-             </Typography>
-             <CardMedia
-               className={classes.media}
-               image={placeholder}
-               title="Billy Murray"
-             />
-             <CardContent>
-               <Typography type="body1" variant="body1">
-                 Welcome to reddit before the real reddit
-               </Typography>
-             </CardContent>
-           </Card>
-         )}
-       </div>
-     )
-   }
- }
-
- export default withStyles(styles)(Home)
+export default withStyles(styles)(Home)

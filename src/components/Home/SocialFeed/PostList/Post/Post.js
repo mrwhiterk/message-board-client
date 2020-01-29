@@ -12,8 +12,8 @@ import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import Comments from './Comments/Comments'
 import { notify } from 'react-notify-toast'
-import Context from '../../Context/Context'
-import { likePost } from '../../../axios-helpers'
+import Context from '../../../../Context/Context'
+import { likePost } from '../../../../../axios-helpers'
 
 const toastColor = {
   background: '#3f51b5',

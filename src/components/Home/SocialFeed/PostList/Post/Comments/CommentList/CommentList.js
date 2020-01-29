@@ -6,7 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import IconButton from '@material-ui/core/IconButton'
 import { withStyles } from '@material-ui/core/styles'
 // import { Link } from 'react-router-dom'
-import Context from '../../../Context/Context'
+import Context from '../../../../../../Context/Context'
 import Comment from './Comment/Comment'
 
 const styles = theme => ({

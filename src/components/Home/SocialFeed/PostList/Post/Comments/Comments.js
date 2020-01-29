@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import Context from '../../Context/Context'
-import { addComment, deleteComment } from '../../../axios-helpers'
+import Context from '../../../../../Context/Context'
+import { addComment, deleteComment } from '../../../../../../axios-helpers'
 import CreateComment from './CreateComment/CreateComment'
 import CommentList from './CommentList/CommentList'
 

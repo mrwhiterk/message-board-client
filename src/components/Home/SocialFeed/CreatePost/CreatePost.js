@@ -93,8 +93,6 @@ class NewPost extends Component {
       this.context.createPost(this.formData)
 
       this.setState({ text: '', photoName: '', photo: null })
-
-      // this.context.loadPosts()
     } catch (error) {
       console.log(error)
     }
@@ -143,7 +141,7 @@ class NewPost extends Component {
         <Notifications options={{ zIndex: 200, top: '90px' }} />
         <Card className={classes.card}>
           <CardHeader
-            avatar={<Avatar src={''} />}
+            avatar={<Avatar src={'https://www.fillmurray.com/200/200'} />}
             title={this.context.user.username}
             className={classes.cardHeader}
           />
