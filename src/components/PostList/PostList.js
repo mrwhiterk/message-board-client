@@ -15,7 +15,11 @@ class PostList extends Component {
     }
 
     if (posts && posts.length) {
-      postContent = posts.map((props, i) => <Post {...props} key={i} />)
+      console.log('posts about to get mapped', posts)
+      postContent = posts.map((props, i) => {
+        console.log('single prop data', props)
+        return <Post {...props} key={i} />
+      })
     }
 
     return <div>{postContent}</div>

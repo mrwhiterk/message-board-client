@@ -71,6 +71,7 @@ class App extends React.Component {
 
   createPost = async path => {
     let { data: post } = await createPost(path)
+    console.log('74', post)
     this.setState({ posts: [post, ...this.state.posts] })
   }
 

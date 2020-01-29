@@ -45,8 +45,11 @@ class Comments extends Component {
       try {
         let response = await addComment(this.props.postId, formData)
         this.props.updateComments(response.data)
+
+        return response.data
       } catch (e) {
         console.log(e)
+        return false
       }
     }
   }
@@ -66,12 +69,12 @@ class Comments extends Component {
     return (
       <>
         <CreateComment
-          addComment={this.addComment}
           classes={this.props.classes}
+          addComment={this.addComment}
         />
         <CommentList
-          comments={this.props.comments}
           classes={this.props.classes}
+          comments={this.props.comments}
           deleteComment={this.deleteComment}
           postId={this.props.postId}
         />

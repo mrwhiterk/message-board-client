@@ -49,9 +49,11 @@ class CreateComment extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  addComment = (e, body) => {
-    this.props.addComment(e, body)
-    this.setState({ text: '' })
+  addComment = async (e, body) => {
+    let data = await this.props.addComment(e, body)
+    if (data) {
+      this.setState({ text: '' })
+    }
   }
 
   render() {

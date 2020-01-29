@@ -61,11 +61,14 @@ class Post extends Component {
   state = {
     like: false,
     likes: 0,
-    comments: this.props.comments
+    comments: []
   }
 
   componentDidMount = async () => {
+    console.log('post.js props', this.props)
+    console.log('props passed to post.js', this.props.comments)
     this.toast = notify.createShowQueue()
+    this.setState({ comments: this.props.comments })
   }
 
   deletePost = async () => {
@@ -86,14 +89,12 @@ class Post extends Component {
     }
   }
 
-  componentWillReceiveProps = props => {}
-
   checkLike = likes => {}
 
   like = () => {}
 
   updateComments = comment => {
-    this.setState({ comments: [comment, ...this.state.comments] })
+    this.setState(prevState => ({ comments: [comment, ...prevState.comments] }))
   }
 
   removeComment = id => {
@@ -167,6 +168,12 @@ class Post extends Component {
           <span>{this.state.comments.length}</span>
         </CardActions>
         <Divider />
+        {console.log(
+          'post id',
+          this.props._id,
+          'post comments',
+          this.state.comments
+        )}
         <Comments
           postId={this.props._id}
           comments={this.state.comments}
