@@ -40,19 +40,6 @@ const styles = theme => ({
 class Comments extends Component {
   static contextType = Context
 
-  addComment = async (e, formData) => {
-    if (e.keyCode === 13) {
-      try {
-        let response = await addComment(this.props.postId, formData)
-        this.context.updateComments(response.data, this.props.postId)
-
-        return response.data
-      } catch (e) {
-        return false
-      }
-    }
-  }
-
   deleteComment = async id => {
     try {
       let response = await deleteComment(this.props.postId, id)
@@ -69,7 +56,7 @@ class Comments extends Component {
       <>
         <CreateComment
           classes={this.props.classes}
-          addComment={this.addComment}
+          postId={this.props.postId}
         />
         <CommentList
           classes={this.props.classes}

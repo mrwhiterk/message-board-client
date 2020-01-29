@@ -6,7 +6,8 @@ import Avatar from '@material-ui/core/Avatar'
 // import IconButton from '@material-ui/core/IconButton'
 import { withStyles } from '@material-ui/core/styles'
 // import { Link } from 'react-router-dom'
-// import Context from '../../../Context/Context'
+import Context from '../../../../../../Context/Context'
+import { addComment } from '../../../../../../../axios-helpers'
 
 const styles = theme => ({
   cardHeader: {
@@ -41,6 +42,8 @@ const styles = theme => ({
 })
 
 class CreateComment extends Component {
+  static contextType = Context
+
   state = {
     text: ''
   }
@@ -49,10 +52,18 @@ class CreateComment extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  addComment = async (e, body) => {
-    let data = await this.props.addComment(e, body)
-    if (data) {
-      this.setState({ text: '' })
+  addComment = async (e, formData) => {
+    if (e.keyCode === 13) {
+      try {
+        let response = await addComment(this.props.postId, formData)
+        this.context.updateComments(response.data, this.props.postId)
+
+        if (response.data) {
+          this.setState({ text: '' })
+        }
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 
