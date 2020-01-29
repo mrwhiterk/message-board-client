@@ -31,6 +31,16 @@ export const createPost = async postInfo => {
   }
 }
 
+export const likePost = async postId => {
+  try {
+    let response = await axios.post(`/posts/like/${postId}`)
+
+    return response
+  } catch (err) {
+    return err.response
+  }
+}
+
 export const getPosts = async () => {
   try {
     let response = await axios.get('/posts')

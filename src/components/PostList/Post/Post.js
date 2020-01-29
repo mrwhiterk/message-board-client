@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom'
 import Comments from '../Comments/Comments'
 import { notify } from 'react-notify-toast'
 import Context from '../../Context/Context'
+import { likePost } from '../../../axios-helpers'
 
 const toastColor = {
   background: '#3f51b5',
@@ -65,8 +66,6 @@ class Post extends Component {
   }
 
   componentDidMount = async () => {
-    console.log('post.js props', this.props)
-    console.log('props passed to post.js', this.props.comments)
     this.toast = notify.createShowQueue()
     this.setState({ comments: this.props.comments })
   }
@@ -91,7 +90,17 @@ class Post extends Component {
 
   checkLike = likes => {}
 
-  like = () => {}
+  like = async () => {
+    try {
+      let response = await likePost(this.props._id)
+
+      if (response.status == 200) {
+        this.context.updatePost(this.props._id, this.context.user._id)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   updateComments = comment => {
     this.setState(prevState => ({ comments: [comment, ...prevState.comments] }))
@@ -157,7 +166,7 @@ class Post extends Component {
               <FavoriteBorderIcon />
             </IconButton>
           )}{' '}
-          <span>{this.state.likes}</span>
+          <span>{this.props.likes.length}</span>
           <IconButton
             className={classes.button}
             aria-label="Comment"
@@ -165,15 +174,9 @@ class Post extends Component {
           >
             <CommentIcon />
           </IconButton>{' '}
-          <span>{this.state.comments.length}</span>
         </CardActions>
         <Divider />
-        {console.log(
-          'post id',
-          this.props._id,
-          'post comments',
-          this.state.comments
-        )}
+
         <Comments
           postId={this.props._id}
           comments={this.state.comments}
