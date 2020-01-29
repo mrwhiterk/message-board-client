@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { CardHeader } from '@material-ui/core'
-// import TextField from '@material-ui/core/TextField'
 import Avatar from '@material-ui/core/Avatar'
 import DeleteIcon from '@material-ui/icons/Delete'
 import IconButton from '@material-ui/core/IconButton'
 import { withStyles } from '@material-ui/core/styles'
-// import { Link } from 'react-router-dom'
+import { deleteComment } from '../../../../../../../axios-helpers'
 import Context from '../../../../../../Context/Context'
 import Comment from './Comment/Comment'
 
@@ -44,8 +43,19 @@ const styles = theme => ({
 class CommentList extends Component {
   static contextType = Context
 
+  deleteComment = async id => {
+    try {
+      let response = await deleteComment(this.props.postId, id)
+      if (response.status === 200) {
+        this.context.removeComment(id, this.props.postId)
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   render() {
-    let { classes, comments, deleteComment } = this.props
+    let { classes, comments } = this.props
     let { user } = this.context
 
     let list = comments.map((item, i) => {
@@ -59,7 +69,7 @@ class CommentList extends Component {
           }
           action={
             item.postedBy._id === user._id && (
-              <IconButton onClick={() => deleteComment(item._id)}>
+              <IconButton onClick={() => this.deleteComment(item._id)}>
                 <DeleteIcon />
               </IconButton>
             )

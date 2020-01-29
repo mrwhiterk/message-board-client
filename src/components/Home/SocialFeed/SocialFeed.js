@@ -32,6 +32,7 @@ class SocialFeed extends Component {
         </Typography> */}
         <Divider />
         <CreatePost />
+        <br />
         <Divider />
         <PostList />
       </Card>

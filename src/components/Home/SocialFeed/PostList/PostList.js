@@ -1,27 +1,23 @@
-import React, { Component } from 'react'
-import Post from './Post/Post'
+import React, { useContext } from 'react'
 import Context from '../../../Context/Context'
+import Post from './Post/Post'
 
-class PostList extends Component {
-  static contextType = Context
+const PostList = () => {
+  const { posts } = useContext(Context)
 
-  render() {
-    let { posts } = this.context
+  let postContent = 'Loading...'
 
-    let postContent = 'Loading...'
-
-    if (posts && posts.length === 0) {
-      postContent = '-- No posts yet --'
-    }
-
-    if (posts && posts.length) {
-      postContent = posts.map((props, i) => {
-        return <Post {...props} key={i} />
-      })
-    }
-
-    return <div>{postContent}</div>
+  if (posts && posts.length === 0) {
+    postContent = '-- No posts yet --'
   }
+
+  if (posts && posts.length) {
+    postContent = posts.map((props, i) => {
+      return <Post {...props} key={i} />
+    })
+  }
+
+  return <div>{postContent}</div>
 }
 
 export default PostList
