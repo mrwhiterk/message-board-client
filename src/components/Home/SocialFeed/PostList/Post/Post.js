@@ -95,12 +95,6 @@ class Post extends Component {
     }
   }
 
-  // removeComment = id => {
-  //   this.setState({
-  //     comments: [...this.props.comments].filter(item => item._id !== id)
-  //   })
-  // }
-
   render() {
     const { classes } = this.props
 
@@ -165,12 +159,7 @@ class Post extends Component {
         </CardActions>
         <Divider />
 
-        <Comments
-          postId={this.props._id}
-          comments={this.props.comments}
-          // updateComments={this.updateComments}
-          removeComment={this.removeComment}
-        />
+        <Comments postId={this.props._id} comments={this.props.comments} />
       </Card>
     )
   }

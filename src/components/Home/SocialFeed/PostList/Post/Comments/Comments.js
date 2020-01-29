@@ -48,17 +48,16 @@ class Comments extends Component {
 
         return response.data
       } catch (e) {
-        console.log(e)
         return false
       }
     }
   }
 
-  deleteComment = async (id, postId) => {
+  deleteComment = async id => {
     try {
-      let response = await deleteComment(id, postId)
+      let response = await deleteComment(this.props.postId, id)
       if (response.status === 200) {
-        this.props.removeComment(postId)
+        this.context.removeComment(id, this.props.postId)
       }
     } catch (e) {
       console.log(e)

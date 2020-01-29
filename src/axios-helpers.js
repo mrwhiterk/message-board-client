@@ -69,9 +69,9 @@ export const addComment = async (id, commentData) => {
   }
 }
 
-export const deleteComment = async (commentId, id) => {
+export const deleteComment = async (postId, commentId) => {
   try {
-    let response = await axios.delete(`/posts/comments/${commentId}/${id}`)
+    let response = await axios.delete(`/posts/comments/${postId}/${commentId}`)
     return response
   } catch (error) {
     return error.response

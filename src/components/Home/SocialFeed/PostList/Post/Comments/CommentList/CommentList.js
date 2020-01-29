@@ -59,9 +59,7 @@ class CommentList extends Component {
           }
           action={
             item.postedBy._id === user._id && (
-              <IconButton
-                onClick={() => deleteComment(this.props.postId, item._id)}
-              >
+              <IconButton onClick={() => deleteComment(item._id)}>
                 <DeleteIcon />
               </IconButton>
             )

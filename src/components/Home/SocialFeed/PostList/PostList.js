@@ -16,7 +16,7 @@ class PostList extends Component {
 
     if (posts && posts.length) {
       postContent = posts.map((props, i) => {
-        return <Post {...props} key={props._id} />
+        return <Post {...props} key={i} />
       })
     }
 
