@@ -51,6 +51,30 @@ export const getPosts = async () => {
   }
 }
 
+export const getUsers = async () => {
+  try {
+    let response = await axios.get('/users')
+
+    return response
+  } catch (error) {
+    return error.response
+  }
+}
+
+export const followUser = async (leaderId, followId) => {
+  let data = {
+    leaderId,
+    followId
+  }
+  try {
+    let response = await axios.post('/users/followUser', data)
+
+    return response
+  } catch (error) {
+    return error.response
+  }
+}
+
 export const deletePost = async id => {
   try {
     let response = await axios.delete(`/posts/${id}`)

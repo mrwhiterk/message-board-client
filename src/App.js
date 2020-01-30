@@ -8,6 +8,7 @@ import MainRouter from './containers/MainRouter'
 import Context from './components/Context/Context'
 import { removeToken } from './helperFunctions'
 import { checkToken, getPosts, deletePost, createPost } from './axios-helpers'
+import Spinner from './components/UI/Spinner'
 
 const theme = createMuiTheme({
   palette: {
@@ -144,9 +145,11 @@ class App extends React.Component {
           removeComment: this.removeComment
         }}
       >
-        <MuiThemeProvider theme={theme}>
-          <MainRouter theme={theme} />
-        </MuiThemeProvider>
+        <React.Suspense fallback={<Spinner />}>
+          <MuiThemeProvider theme={theme}>
+            <MainRouter theme={theme} />
+          </MuiThemeProvider>
+        </React.Suspense>
       </Context.Provider>
     )
   }

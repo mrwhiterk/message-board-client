@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import Context from '../../../Context/Context'
 import Post from './Post/Post'
+// import Spinner from '../../../UI/Spinner/Spinner'
 
 const PostList = () => {
   const { posts } = useContext(Context)
@@ -12,8 +13,8 @@ const PostList = () => {
   }
 
   if (posts && posts.length) {
-    postContent = posts.map((props, i) => {
-      return <Post {...props} key={i} />
+    postContent = posts.map(props => {
+      return <Post {...props} key={props._id} />
     })
   }
 
