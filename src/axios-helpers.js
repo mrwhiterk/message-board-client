@@ -61,13 +61,9 @@ export const getUsers = async () => {
   }
 }
 
-export const followUser = async (leaderId, followId) => {
-  let data = {
-    leaderId,
-    followId
-  }
+export const followUser = async leaderId => {
   try {
-    let response = await axios.post('/users/followUser', data)
+    let response = await axios.post('/users/followUser', { leaderId })
 
     return response
   } catch (error) {
