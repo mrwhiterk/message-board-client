@@ -49,7 +49,7 @@ class FindPeople extends Component {
   state = {
     users: null,
     open: false,
-    snackbarMessage: 'test'
+    snackbarMessage: null
   }
 
   componentDidMount = async () => {
@@ -64,7 +64,6 @@ class FindPeople extends Component {
   clickFollow = async leaderId => {
     try {
       let response = await followUser(leaderId)
-
       if (response.status === 200) {
         let { leader, follower } = response.data
         this.updateUserFollowers(leader, follower)
@@ -141,28 +140,24 @@ class FindPeople extends Component {
     }
 
     return (
-      <div>
-        <Paper className={classes.root} elevation={4}>
-          <Typography type="title" className={classes.title}>
-            Who to follow
-          </Typography>
-          <List>{userList}</List>
-          <Snackbar
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right'
-            }}
-            open={this.state.open}
-            onClose={this.handleRequestClose}
-            autoHideDuration={6000}
-            message={
-              <span className={classes.snack}>
-                {this.state.snackbarMessage}
-              </span>
-            }
-          />
-        </Paper>
-      </div>
+      <Paper className={classes.root} elevation={4}>
+        <Typography type="title" className={classes.title}>
+          Who to follow
+        </Typography>
+        <List>{userList}</List>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right'
+          }}
+          open={this.state.open}
+          onClose={this.handleRequestClose}
+          autoHideDuration={6000}
+          message={
+            <span className={classes.snack}>{this.state.snackbarMessage}</span>
+          }
+        />
+      </Paper>
     )
   }
 }

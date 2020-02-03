@@ -4,17 +4,13 @@ import { Route, Redirect } from 'react-router-dom'
 import { checkToken } from '../../axios-helpers'
 
 const PrivateRoute = ({ component: Component, redirect, ...rest }) => {
-  const { isAuthenticated } = useContext(Context)
+  const context = useContext(Context)
 
   return (
     <Route
       {...rest}
       render={props =>
-        isAuthenticated && checkToken() ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to={redirect} />
-        )
+        checkToken() ? <Component {...props} /> : <Redirect to={redirect} />
       }
     />
   )

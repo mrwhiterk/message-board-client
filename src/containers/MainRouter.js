@@ -1,20 +1,27 @@
 import React, { Component } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
+import { checkToken } from '../axios-helpers'
 
 import Nav from '../components/Nav/Nav'
 // import Home from '../components/Home/Home'
 // import Signup from '../components/auth/Signup/Signup'
 // import Signin from '../components/auth/Signin/Signin'
-import Profile from '../components/Profile/Profile'
+// import Profile from '../components/Profile/Profile'
 import Context from '../components/Context/Context'
 import PrivateRoute from '../components/PrivateRoute/PrivateRoute'
 
 const Home = React.lazy(() => import('../components/Home/Home'))
 const Signup = React.lazy(() => import('../components/auth/Signup/Signup'))
 const Signin = React.lazy(() => import('../components/auth/Signin/Signin'))
+const Profile = React.lazy(() => import('../components/Profile/Profile'))
 
 export default class MainRouter extends Component {
   static contextType = Context
+
+  componentDidMount() {
+    console.log('main router cdm ran')
+    checkToken()
+  }
 
   render() {
     let { isAuthenticated: isAuth } = this.context
@@ -25,7 +32,7 @@ export default class MainRouter extends Component {
         {!isAuth && <Route path="/signin" component={Signin} />}
         <PrivateRoute path="/profile" component={Profile} redirect="/signup" />
         <Route exact path="/" component={Home} />
-        <Redirect to={isAuth ? '/' : '/signin'} />
+        {/* <Redirect to={isAuth ? '/' : '/signin'} /> */}
       </Switch>
     )
 
