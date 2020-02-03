@@ -48,7 +48,8 @@ class FindPeople extends Component {
 
   state = {
     users: null,
-    open: false
+    open: false,
+    snackbarMessage: 'test'
   }
 
   componentDidMount = async () => {
@@ -81,7 +82,8 @@ class FindPeople extends Component {
         }
         return user
       }),
-      open: true
+      open: true,
+      snackbarMessage: `following ${leader.username}`
     })
   }
 
