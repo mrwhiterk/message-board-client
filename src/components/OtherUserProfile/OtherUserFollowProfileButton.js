@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 import Context from '../Context/Context'
 import { followUser, unfollowUser } from '../../axios-helpers'
@@ -10,7 +9,7 @@ class OtherUserFollowProfileButton extends Component {
   followClick = async () => {
     try {
       let res = await followUser(this.props.otherUser._id)
-      let { leader, follower } = res.data
+      let { leader } = res.data
 
       this.props.setUpdatedUser(leader)
     } catch (e) {
@@ -21,8 +20,8 @@ class OtherUserFollowProfileButton extends Component {
   unfollowClick = async () => {
     try {
       let res = await unfollowUser(this.props.otherUser._id)
-      let { leader, follower } = res.data
-      console.log(res.data)
+      let { leader } = res.data
+
       this.props.setUpdatedUser(leader)
     } catch (e) {
       console.log(e)
@@ -31,7 +30,6 @@ class OtherUserFollowProfileButton extends Component {
 
   render() {
     let { otherUser } = this.props
-    console.log(otherUser)
 
     let checkIfFollowed = otherUser.followers.find(
       x => x._id === this.context.user._id
@@ -60,4 +58,4 @@ class OtherUserFollowProfileButton extends Component {
     )
   }
 }
-export default withRouter(OtherUserFollowProfileButton)
+export default OtherUserFollowProfileButton

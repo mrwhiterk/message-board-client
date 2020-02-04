@@ -37,6 +37,7 @@ const styles = theme => ({
     marginTop: 10
   }
 })
+
 class OtherUserFollowGrid extends Component {
   render() {
     const { classes } = this.props

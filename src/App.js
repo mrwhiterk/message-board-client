@@ -38,12 +38,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log('app cdm ran')
     let user = checkToken()
     if (user) {
-      this.setState({ user: user, isAuthenticated: true }, () =>
-        console.log(this.state.isAuthenticated)
-      )
+      this.setState({ user: user, isAuthenticated: true })
     }
   }
 

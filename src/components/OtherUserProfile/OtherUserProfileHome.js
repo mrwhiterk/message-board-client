@@ -22,6 +22,7 @@ const styles = theme => ({
     minHeight: 330
   }
 })
+
 class OtherUserProfileHome extends Component {
   static contextType = Context
 
@@ -31,18 +32,34 @@ class OtherUserProfileHome extends Component {
 
   componentDidMount = async () => {
     this.context.loadPosts()
+    this.getUser()
+  }
+
+  getUser = async () => {
     let { id } = this.props.match.params
     try {
       let res = await getUserProfileById(id)
-
       this.setState({ user: res.data })
     } catch (error) {
       console.log(error)
     }
   }
 
+  componentDidUpdate() {
+    if (this.props.match.params.id) {
+      this.getUser()
+      delete this.props.match.params.id
+    }
+  }
+
   setUpdatedUser = async user => {
-    this.setState({ user: user })
+    this.setState({
+      user: {
+        ...this.state.user,
+        following: user.following,
+        followers: user.followers
+      }
+    })
   }
 
   render() {

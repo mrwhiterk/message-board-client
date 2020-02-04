@@ -22,7 +22,6 @@ export default class MainRouter extends Component {
   static contextType = Context
 
   componentDidMount() {
-    console.log('main router cdm ran')
     checkToken()
   }
 

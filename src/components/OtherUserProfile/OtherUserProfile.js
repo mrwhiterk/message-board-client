@@ -49,10 +49,6 @@ const styles = theme => ({
 class OtherUserProfile extends Component {
   static contextType = Context
 
-  clickFollowButton = async () => {}
-
-  clickUnfollowButton = async () => {}
-
   render() {
     const { classes } = this.props
     const photoUrl = this.props.user
@@ -79,9 +75,6 @@ class OtherUserProfile extends Component {
                 variant="contained"
                 otherUser={this.props.user}
                 setUpdatedUser={this.props.setUpdatedUser}
-                following={this.props.user.following}
-                onButtonFollow={this.clickFollowButton}
-                onButtonUnfollow={this.clickUnfollowButton}
               />
             </ListItem>
             <Divider />
