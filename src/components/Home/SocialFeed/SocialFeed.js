@@ -27,9 +27,9 @@ class SocialFeed extends Component {
     const { classes } = this.props
     return (
       <Card className={classes.card}>
-        <Typography type="title" className={classes.title}>
+        {/* <Typography type="title" className={classes.title}>
           SocialFeed
-        </Typography>
+        </Typography> */}
         <Divider />
         <CreatePost />
         <br />

@@ -14,6 +14,9 @@ const Home = React.lazy(() => import('../components/Home/Home'))
 const Signup = React.lazy(() => import('../components/auth/Signup/Signup'))
 const Signin = React.lazy(() => import('../components/auth/Signin/Signin'))
 const Profile = React.lazy(() => import('../components/Profile/Profile'))
+const OtherUserProfileHome = React.lazy(() =>
+  import('../components/OtherUserProfile/OtherUserProfileHome')
+)
 
 export default class MainRouter extends Component {
   static contextType = Context
@@ -32,6 +35,7 @@ export default class MainRouter extends Component {
         {!isAuth && <Route path="/signin" component={Signin} />}
         <PrivateRoute path="/profile" component={Profile} redirect="/signup" />
         <Route exact path="/" component={Home} />
+        <Route path="/user/:id" component={OtherUserProfileHome} />
         {/* <Redirect to={isAuth ? '/' : '/signin'} /> */}
       </Switch>
     )

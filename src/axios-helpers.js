@@ -61,9 +61,29 @@ export const getUsers = async () => {
   }
 }
 
+export const getUserProfileById = async id => {
+  try {
+    let response = await axios.get(`/users/getUserProfileById/${id}`)
+
+    return response
+  } catch (error) {
+    return error.response
+  }
+}
+
 export const followUser = async leaderId => {
   try {
     let response = await axios.post('/users/followUser', { leaderId })
+
+    return response
+  } catch (error) {
+    return error.response
+  }
+}
+
+export const unfollowUser = async leaderId => {
+  try {
+    let response = await axios.post('/users/unfollowUser', { leaderId })
 
     return response
   } catch (error) {
